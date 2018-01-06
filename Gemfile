@@ -56,3 +56,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Added by me
 gem "haml-rails", "~> 1.0"
 gem 'carrierwave', '~> 1.0'
+gem 'jquery-rails'
