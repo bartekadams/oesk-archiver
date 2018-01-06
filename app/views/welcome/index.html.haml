@@ -1,7 +1,5 @@
 -#%h1 Welcome#index
 -#%p Find me in app/views/welcome/index.html.haml
 %div
-  %p
-    input
-  %input#fileInput{ type: "text" }
-  %div#output
+  = link_to "Załaduj plik", new_uploaded_file_path
+  = link_to "Lista plików", uploaded_files_path

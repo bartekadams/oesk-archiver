@@ -1,31 +1,10 @@
 %div
   %p
-    Tutaj będzie input
+    Załaduj plik
     = form_for @uploaded_file do |f|
       = f.file_field :file
+      %br
       = f.submit
 
-    = form_with scope: :uploaded_file, local: true do |f|
-      %p
-        = f.label :name
-        %br
-        = f.text_field :name
-        %br
-        = f.file_field :file
-      %p
-        = f.submit
-
-    -#= form_with model: file, local: true, html: {multipart: true} do |f|
-      %p
-        = f.submit
-
-
-
-    -#= form_for scope: :file, local: true do |f|
-      %p
-        = f.label :name
-        %br
-        = f.text_field :name
-
-      %p
-        = f.submit
+= link_to "Lista plików", uploaded_files_path
+= link_to "Strona główna", welcome_index_path
