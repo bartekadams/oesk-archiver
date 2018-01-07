@@ -1,5 +1,7 @@
 - @files.each do |f|
   %p
     = f.name
+    = f.size
+    = f.inspect
 = link_to "Załaduj plik", new_uploaded_file_path
 = link_to "Strona główna", welcome_index_path
