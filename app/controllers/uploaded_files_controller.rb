@@ -15,6 +15,11 @@ class UploadedFilesController < ApplicationController
     file.file = params[:uploaded_file][:file]
     file.save
 
+    #po save rozpoczecie pakowania w formatach np
+
+    #po spakowaniu zrobienie create wiecej plikow xD
+    #original file id? type: pdf, txt, doc itp
+
     redirect_to uploaded_files_path
   end
 
@@ -24,6 +29,13 @@ class UploadedFilesController < ApplicationController
     files.each do |file|
 
     puts path + file.id.to_s
+    # c - create
+    # z - gzip
+    # j - bzip
+    # f - okresla nazwe wyjsciowa pliku
+    puts `tar -c #{path + file.id.to_s + file.name} -f #{path + file.id.to_s + file.name}.tar`
+    puts `tar -cz #{path + file.id.to_s + file.name} -f #{path + file.id.to_s + file.name}.tar.gz`
+    puts `tar -cj #{path + file.id.to_s + file.name} -f #{path + file.id.to_s + file.name}.tar.bz`
     #puts `cp #{path + file.id.to_s + file.name} #{path + file.id.to_s + file.name}x`
 
     end
