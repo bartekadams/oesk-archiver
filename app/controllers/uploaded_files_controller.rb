@@ -33,9 +33,46 @@ class UploadedFilesController < ApplicationController
     # z - gzip
     # j - bzip
     # f - okresla nazwe wyjsciowa pliku
-    puts `tar -c #{path + file.id.to_s + file.name} -f #{path + file.id.to_s + file.name}.tar`
-    puts `tar -cz #{path + file.id.to_s + file.name} -f #{path + file.id.to_s + file.name}.tar.gz`
-    puts `tar -cj #{path + file.id.to_s + file.name} -f #{path + file.id.to_s + file.name}.tar.bz`
+    path_to_file = path + file.id.to_s + file.name
+
+    # TAR archive
+    type = '.tar'
+    puts `tar -c #{path_to_file.to_s} -f #{path_to_file.to_s + type}`
+    File.open(path_to_file.to_s + type) do |f|
+      CompressedFile.create(
+        name: path_to_file.to_s + type,
+        file_type: :tar,
+        uploaded_file: file,
+        file: f)
+    end
+    puts `rm #{path_to_file.to_s + type}`
+
+    # TAR.GZ compression
+    type = '.tar.gz'
+    puts `tar -cz #{path_to_file.to_s} -f #{path_to_file.to_s + type}`
+    File.open(path_to_file.to_s + type) do |f|
+      CompressedFile.create(
+        name: path_to_file.to_s + type,
+        file_type: :tar_gz,
+        uploaded_file: file,
+        file: f)
+    end
+    puts `rm #{path_to_file.to_s + type}`
+
+    # TAR.BZ compression
+    type = '.tar.bz'
+    puts `tar -cj #{path_to_file.to_s} -f #{path_to_file.to_s + type}`
+    File.open(path_to_file.to_s + type) do |f|
+      CompressedFile.create(
+        name: path_to_file.to_s + type,
+        file_type: :tar_bz,
+        uploaded_file: file,
+        file: f)
+    end
+    puts `rm #{path_to_file.to_s + type}`
+
+    #puts `tar -cz #{path_to_file} -f #{path_to_file}.tar.gz`
+    #puts `tar -cj #{path_to_file} -f #{path_to_file}.tar.bz`
     #puts `cp #{path + file.id.to_s + file.name} #{path + file.id.to_s + file.name}x`
 
     end
