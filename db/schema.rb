@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180107002351) do
+ActiveRecord::Schema.define(version: 20180113075948) do
+
+  create_table "compressed_files", force: :cascade do |t|
+    t.string "name"
+    t.string "file"
+    t.integer "size"
+    t.integer "uploaded_file_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "file_type"
+    t.index ["uploaded_file_id"], name: "index_compressed_files_on_uploaded_file_id"
+  end
 
   create_table "uploaded_files", force: :cascade do |t|
     t.string "name"
@@ -18,6 +29,7 @@ ActiveRecord::Schema.define(version: 20180107002351) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "size"
+    t.integer "file_type"
   end
 
 end
