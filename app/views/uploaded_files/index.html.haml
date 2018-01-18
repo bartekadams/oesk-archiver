@@ -1,7 +1,13 @@
-- @files.each do |f|
-  %p
-    = f.name
-    = f.size
-    = f.inspect
+.container
+  - @files.each do |f|
+    .row
+      .col-xs-12.uploaded-file-row
+        = f.name
+        = f.size
+        = f.inspect
+        %ul
+          - f.compressed_files.each do |c|
+            %li
+              = c.name
 = link_to "Załaduj plik", new_uploaded_file_path
 = link_to "Strona główna", welcome_index_path

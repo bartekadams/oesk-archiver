@@ -1,6 +1,8 @@
--#%h1 Welcome#index
--#%p Find me in app/views/welcome/index.html.haml
-%div
-  = link_to "Załaduj plik", new_uploaded_file_path
-  = link_to "Lista plików", uploaded_files_path
-  = link_to "Usuń wszystkie pliki", uploaded_files_clear_all_files_path, remote: true
+.container.main-page-container
+  .row
+    .col-xs-4.main-page-link-container
+      = link_to "Załaduj plik", new_uploaded_file_path
+    .col-xs-4.main-page-link-container
+      = link_to "Lista plików", uploaded_files_path
+    .col-xs-4.main-page-link-container
+      = link_to "Usuń wszystkie pliki", uploaded_files_clear_all_files_path, remote: true
