@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'welcome#index'
   get 'welcome/index'
   get 'uploaded_files/shell'
+  get 'uploaded_files/clear_all_files'
 
   resources :uploaded_files
 

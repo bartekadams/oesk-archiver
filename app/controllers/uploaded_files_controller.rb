@@ -40,7 +40,7 @@ class UploadedFilesController < ApplicationController
     puts `tar -c #{path_to_file.to_s} -f #{path_to_file.to_s + type}`
     File.open(path_to_file.to_s + type) do |f|
       CompressedFile.create(
-        name: path_to_file.to_s + type,
+        name: file.name + type,
         file_type: :tar,
         uploaded_file: file,
         file: f)
@@ -52,7 +52,7 @@ class UploadedFilesController < ApplicationController
     puts `tar -cz #{path_to_file.to_s} -f #{path_to_file.to_s + type}`
     File.open(path_to_file.to_s + type) do |f|
       CompressedFile.create(
-        name: path_to_file.to_s + type,
+        name: file.name + type,
         file_type: :tar_gz,
         uploaded_file: file,
         file: f)
@@ -64,7 +64,7 @@ class UploadedFilesController < ApplicationController
     puts `tar -cj #{path_to_file.to_s} -f #{path_to_file.to_s + type}`
     File.open(path_to_file.to_s + type) do |f|
       CompressedFile.create(
-        name: path_to_file.to_s + type,
+        name: file.name + type,
         file_type: :tar_bz,
         uploaded_file: file,
         file: f)
@@ -84,5 +84,9 @@ class UploadedFilesController < ApplicationController
     #puts path #Rails.root / 'public' / 'uploads' / 'uploaded_file' / 'file'
     #puts `ls -al #{path}`
     #puts new_uploaded_file_path
+  end
+
+  def clear_all_files
+    f = UploadedFile.all.destroy_all
   end
 end
