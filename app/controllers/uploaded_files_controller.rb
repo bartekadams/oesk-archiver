@@ -135,6 +135,23 @@ class UploadedFilesController < ApplicationController
       end
       `rm #{path_to_file.to_s + type}`
 
+      # KGB Archiver
+      # kgb: http://manpages.ubuntu.com/manpages/xenial/man1/kgb.1.html
+      type = '.kgb'
+      time_start - Time.now
+      `kgb -1 #{path_to_file.to_s + type} #{path_to_file.to_s}`
+      time_end = Time.now
+      File.open(path_to_file.to_s + type) do |f|
+        CompressedFile.create(
+        name: file.name + type,
+        file_type: :kgb,
+        uploaded_file: file,
+        file: f,
+        compression_ratio: f.size.to_f / file.size.to_f,
+        compression_time: time_diff_milli(time_start, time_end))
+      end
+      `rm #{path_to_file.to_s + type}`
+
     end
   end
 
