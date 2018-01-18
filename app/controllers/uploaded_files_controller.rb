@@ -10,7 +10,7 @@ class UploadedFilesController < ApplicationController
 
   def create
     file = UploadedFile.new
-    file.name = params[:uploaded_file][:file].original_filename
+    file.name = params[:uploaded_file][:file].original_filename.gsub(/\s+/, '_')
     file.size = params[:uploaded_file][:file].size
     file.file = params[:uploaded_file][:file]
     file.save
@@ -79,6 +79,22 @@ class UploadedFilesController < ApplicationController
           file: f,
           compression_ratio: f.size.to_f / file.size.to_f,
           compression_time: time_diff_milli(time_start, time_end))
+      end
+      `rm #{path_to_file.to_s + type}`
+
+      # LZ4 High compression
+      type = '.lz4'
+      time_start - Time.now
+      `lz4 -9 #{path_to_file.to_s} #{path_to_file.to_s + type}`
+      time_end = Time.now
+      File.open(path_to_file.to_s + type) do |f|
+        CompressedFile.create(
+        name: file.name + type,
+        file_type: :lz4,
+        uploaded_file: file,
+        file: f,
+        compression_ratio: f.size.to_f / file.size.to_f,
+        compression_time: time_diff_milli(time_start, time_end))
       end
       `rm #{path_to_file.to_s + type}`
     end
