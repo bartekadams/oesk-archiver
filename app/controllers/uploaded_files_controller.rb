@@ -28,11 +28,13 @@ class UploadedFilesController < ApplicationController
     files = UploadedFile.all
     files.each do |file|
       puts path + file.id.to_s
+      path_to_file = path + file.id.to_s + file.name
+
+      # tar achiver for Ubuntu
       # c - create
       # z - gzip
       # j - bzip
       # f - okresla nazwe wyjsciowa pliku
-      path_to_file = path + file.id.to_s + file.name
 
       # TAR archive
       type = '.tar'
@@ -83,6 +85,7 @@ class UploadedFilesController < ApplicationController
       `rm #{path_to_file.to_s + type}`
 
       # LZ4 High compression
+      # Compiled from source: https://github.com/lz4/lz4/tree/master
       type = '.lz4'
       time_start - Time.now
       `lz4 -9 #{path_to_file.to_s} #{path_to_file.to_s + type}`
@@ -97,6 +100,41 @@ class UploadedFilesController < ApplicationController
         compression_time: time_diff_milli(time_start, time_end))
       end
       `rm #{path_to_file.to_s + type}`
+
+      # xz compression
+      # xz-utils: https://packages.ubuntu.com/xenial/xz-utils
+      type = '.xz'
+      time_start - Time.now
+      `xz -zk9 #{path_to_file.to_s}`
+      time_end = Time.now
+      File.open(path_to_file.to_s + type) do |f|
+        CompressedFile.create(
+        name: file.name + type,
+        file_type: :xz,
+        uploaded_file: file,
+        file: f,
+        compression_ratio: f.size.to_f / file.size.to_f,
+        compression_time: time_diff_milli(time_start, time_end))
+      end
+      `rm #{path_to_file.to_s + type}`
+
+      # 7z LZMA compression
+      # p7zip-full: http://manpages.ubuntu.com/manpages/xenial/man1/7z.1.html
+      type = '.7z'
+      time_start - Time.now
+      `7z a -t7z -mx=9 #{path_to_file.to_s + type} #{path_to_file.to_s}`
+      time_end = Time.now
+      File.open(path_to_file.to_s + type) do |f|
+        CompressedFile.create(
+        name: file.name + type,
+        file_type: :_7z,
+        uploaded_file: file,
+        file: f,
+        compression_ratio: f.size.to_f / file.size.to_f,
+        compression_time: time_diff_milli(time_start, time_end))
+      end
+      `rm #{path_to_file.to_s + type}`
+
     end
   end
 
