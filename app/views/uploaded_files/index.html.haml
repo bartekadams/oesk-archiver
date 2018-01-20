@@ -1,3 +1,4 @@
+%div{ id: "graph_here", style: "width:800px;height:550px;margin:auto" }
 .container
   - @files.each do |f|
     .row
@@ -8,6 +9,56 @@
         %ul
           - f.compressed_files.each do |c|
             %li
-              = c.name
+              = c.name + c.compression_ratio.to_s
 = link_to "Załaduj plik", new_uploaded_file_path
 = link_to "Strona główna", welcome_index_path
+
+-#
+  - t1 = @files.first.compressed_files.pluck(:id)
+  - t2 = @files.first.compressed_files.pluck(:compression_ratio)
+  //var x1 = #{ @files.pluck(:id) };
+  //var y1 = #{ @files.pluck(:compression_ratio) };
+  //x1 = #{@files.find(14).compressed_files.pluck(:id)}
+  //y1 = #{@files.find(14).compressed_files.pluck(:compression_ratio)}
+  //console.log(#{@files.find(14).compressed_files.pluck(:compression_ratio)})
+
+  x1 = ["xd", "ds"]
+  y1 = [1, 2]
+  :javascript
+    x1 = #{raw @files.first.compressed_files.pluck(:file_type)}
+    y1 = #{@files.first.compressed_files.pluck(:compression_ratio)}
+= @files.first.compressed_files.pluck(:file_type)
+:javascript
+  //https://plot.ly/javascript/line-and-scatter/
+  //https://plot.ly/javascript/error-bars/
+  var trace1 = {
+    x: [1, 2, 3],
+    y: [1, 2, 3],
+    mode: 'markers+text',
+    type: 'scatter',
+    name: 'Wykresik',
+    text: ['H1', 'H2', 'H3', 'H4'],
+    textposition: 'top center',
+    marker: { size: 12 }
+  };
+
+  var trace2 = {
+    x: [1, 2, 3],
+    y: [1, 3, 5],
+    mode: 'lines',
+    type: 'scatter'
+  };
+
+  var trace3 = {
+    x: [1, 2, 3],
+    y: [5, 3, 4],
+    mode: 'lines+markers',
+    type: 'scatter'
+  };
+
+  var layout = {
+    title:'Data Labels on the Plot'
+  };
+
+  var data = [trace1, trace2, trace3];
+  Plotly.plot('graph_here', data, layout);

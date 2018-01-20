@@ -58,3 +58,4 @@ gem "haml-rails", "~> 1.0"
 gem 'carrierwave', '~> 1.0'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
+gem 'plotlyjs-rails'
