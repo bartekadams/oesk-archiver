@@ -1,7 +1,42 @@
 class UploadedFilesController < ApplicationController
 
   def index
-    @files = UploadedFile.all
+    @data = {} # same as Hash.new
+    @data[:tar_gz] = []
+    @data[:tar_bz] = []
+    @data[:lz4] = []
+    @data[:xz] = []
+    @data[:_7z] = []
+    @data[:kgb] = []
+
+    #compressed files upladed as file type doc/pdf/txt/other
+    @uploaded_files = UploadedFile.where(file_type: nil)
+    @uploaded_files.each do |file|
+      file.compressed_files.each do |compressed|
+        file_data = {
+            uncompressed_file_size: file.size,
+            compressed_file_size: compressed.size,
+            compression_ratio: compressed.compression_ratio,
+            name: compressed.name,
+            compression_time: compressed.compression_time
+        }
+        case compressed.file_type.to_sym
+        when :tar_gz
+          @data[:tar_gz].push(file_data)
+        when :tar_bz
+          @data[:tar_bz].push(file_data)
+        when :lz4
+          @data[:lz4].push(file_data)
+        when :xz
+          @data[:xz].push(file_data)
+        when :_7z
+          @data[:_7z].push(file_data)
+        when :kgb
+          @data[:kgb].push(file_data)
+        end
+      end
+    end
+
   end
 
   def new
