@@ -16,3 +16,6 @@
 :javascript
   console.log(#{raw @data.to_json});
   draw_ratio_to_original_size(#{raw @data[:pdf].to_json});
+
+  document.getElementById('sidebar_file_list').className += " active";
+  console.log(document.getElementById('sidebar_load_file'));

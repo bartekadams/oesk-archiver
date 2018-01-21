@@ -1,0 +1,23 @@
+%html
+  %head
+    %title
+      OESK Archiver
+
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  %body
+    .container-fluid.main-page-container
+      .row
+        .col-xs-3
+          %ul.nav.nav-sidebar
+            %li#sidebar_load_file
+              = link_to "Załaduj plik", new_uploaded_file_path
+            %li#sidebar_file_list
+              = link_to "Lista plików", uploaded_files_path
+            %li
+              = link_to "Usuń wszystkie pliki", uploaded_files_clear_all_files_path, remote: true
+
+        .col-xs-9
+          = yield

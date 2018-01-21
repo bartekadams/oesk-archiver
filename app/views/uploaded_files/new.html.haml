@@ -1,11 +1,13 @@
 %div
   %p
-    Załaduj plik
     = form_for @uploaded_file do |f|
-      = f.file_field :file
-      = select_tag :file_type, options_for_select(UploadedFile.file_types), name: "uploaded_file[file_type]"
-      %br
-      = f.submit
+      %p
+        Typ pliku:
+        = select_tag :file_type, options_for_select(UploadedFile.file_types), name: "uploaded_file[file_type]"
+      %p
+        = f.file_field :file
+      = f.submit "Prześlij plik"
 
-= link_to "Lista plików", uploaded_files_path
-= link_to "Strona główna", welcome_index_path
+:javascript
+  document.getElementById('sidebar_load_file').className += " active";
+  console.log(document.getElementById('sidebar_load_file'));
