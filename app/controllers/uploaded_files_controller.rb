@@ -2,41 +2,9 @@ class UploadedFilesController < ApplicationController
 
   def index
     @data = {} # same as Hash.new
-    @data[:tar_gz] = []
-    @data[:tar_bz] = []
-    @data[:lz4] = []
-    @data[:xz] = []
-    @data[:_7z] = []
-    @data[:kgb] = []
-
-    #compressed files upladed as file type doc/pdf/txt/other
-    @uploaded_files = UploadedFile.where(file_type: nil)
-    @uploaded_files.each do |file|
-      file.compressed_files.each do |compressed|
-        file_data = {
-            uncompressed_file_size: file.size,
-            compressed_file_size: compressed.size,
-            compression_ratio: compressed.compression_ratio,
-            name: compressed.name,
-            compression_time: compressed.compression_time
-        }
-        case compressed.file_type.to_sym
-        when :tar_gz
-          @data[:tar_gz].push(file_data)
-        when :tar_bz
-          @data[:tar_bz].push(file_data)
-        when :lz4
-          @data[:lz4].push(file_data)
-        when :xz
-          @data[:xz].push(file_data)
-        when :_7z
-          @data[:_7z].push(file_data)
-        when :kgb
-          @data[:kgb].push(file_data)
-        end
-      end
-    end
-
+    @data[:pdf] = getData(UploadedFile.where(file_type: :pdf))
+    @data[:doc] = getData(UploadedFile.where(file_type: :doc))
+    @data[:other] = getData(UploadedFile.where(file_type: :other))
   end
 
   def new
@@ -48,6 +16,7 @@ class UploadedFilesController < ApplicationController
     file.name = params[:uploaded_file][:file].original_filename.gsub(/\s+/, '_')
     file.size = params[:uploaded_file][:file].size
     file.file = params[:uploaded_file][:file]
+    file.file_type = params[:uploaded_file][:file_type].to_i
     file.save
 
     shell(file)
@@ -193,5 +162,43 @@ class UploadedFilesController < ApplicationController
       compression_time: time_diff_milli(time_start, time_end))
     end
     `rm #{path_to_file.to_s + type}`
+  end
+
+  def getData(uploaded_files)
+    data = {}
+    data[:tar_gz] = []
+    data[:tar_bz] = []
+    data[:lz4] = []
+    data[:xz] = []
+    data[:_7z] = []
+    data[:kgb] = []
+
+    uploaded_files.each do |file|
+      file.compressed_files.each do |compressed|
+        file_data = {
+            uncompressed_file_size: file.size,
+            compressed_file_size: compressed.size,
+            compression_ratio: compressed.compression_ratio,
+            name: compressed.name,
+            compression_time: compressed.compression_time
+        }
+        case compressed.file_type.to_sym
+        when :tar_gz
+          data[:tar_gz].push(file_data)
+        when :tar_bz
+          data[:tar_bz].push(file_data)
+        when :lz4
+          data[:lz4].push(file_data)
+        when :xz
+          data[:xz].push(file_data)
+        when :_7z
+          data[:_7z].push(file_data)
+        when :kgb
+          data[:kgb].push(file_data)
+        end
+      end
+    end
+    data # return data
+
   end
 end

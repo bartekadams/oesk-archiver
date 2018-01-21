@@ -3,6 +3,7 @@
     Załaduj plik
     = form_for @uploaded_file do |f|
       = f.file_field :file
+      = select_tag :file_type, options_for_select(UploadedFile.file_types), name: "uploaded_file[file_type]"
       %br
       = f.submit
 

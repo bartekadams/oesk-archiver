@@ -15,4 +15,4 @@
 = javascript_include_tag "charts"
 :javascript
   console.log(#{raw @data.to_json});
-  draw_ratio_to_original_size(#{raw @data.to_json});
+  draw_ratio_to_original_size(#{raw @data[:pdf].to_json});

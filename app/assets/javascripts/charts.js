@@ -11,7 +11,7 @@ function draw_ratio_to_original_size(data) {
     title:'Współczynnik kompresji do rozmiaru pliku',
     yaxis: {
       tickformat: ',.0%',
-      range: [0,1]
+      range: [0,1.2]
     }
   };
 
