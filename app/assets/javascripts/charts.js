@@ -1,4 +1,4 @@
-function draw_ratio_to_original_size(data) {
+function draw_ratio_to_original_size(data, chart_html_id, title) {
   var traces = [];
   traces.push(getTrace("tar_gz", data.tar_gz));
   traces.push(getTrace("tar_bz", data.tar_bz));
@@ -8,14 +8,18 @@ function draw_ratio_to_original_size(data) {
   traces.push(getTrace("kgb", data.kgb));
 
   var layout = {
-    title:'Współczynnik kompresji do rozmiaru pliku',
+    title: title,
     yaxis: {
+      title: 'Współczynnik kompresji',
       tickformat: ',.0%',
       range: [0,1.2]
+    },
+    xaxis: {
+      title: "Rozmiar pliku"
     }
   };
 
-  Plotly.plot('graph_ratio_to_original_size', traces, layout);
+  Plotly.plot(chart_html_id, traces, layout);
 }
 
 function getTrace(compression_name, compressed_files_data) {

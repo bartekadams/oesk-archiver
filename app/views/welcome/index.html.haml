@@ -1,6 +1,3 @@
-.col-xs-4.main-page-link-container
-  = link_to "Załaduj plik", new_uploaded_file_path
-.col-xs-4.main-page-link-container
-  = link_to "Lista plików", uploaded_files_path
-.col-xs-4.main-page-link-container
-  = link_to "Usuń wszystkie pliki", uploaded_files_clear_all_files_path, remote: true
+Witam na stronie głównej Bartka :)
+:javascript
+  document.getElementById('sidebar_main_page').className += " active";

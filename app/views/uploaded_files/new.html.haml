@@ -1,13 +1,10 @@
-%div
-  %p
-    = form_for @uploaded_file do |f|
-      %p
-        Typ pliku:
-        = select_tag :file_type, options_for_select(UploadedFile.file_types), name: "uploaded_file[file_type]"
-      %p
-        = f.file_field :file
-      = f.submit "Prześlij plik"
-
+%div.uploaded-file-new
+  = form_for @uploaded_file do |f|
+    %p
+      = f.file_field :file
+    %p
+      = select_tag :file_type, options_for_select(UploadedFile.file_types), name: "uploaded_file[file_type]"
+    %br
+    = f.submit "Prześlij plik", class: "btn btn-primary"
 :javascript
   document.getElementById('sidebar_load_file').className += " active";
-  console.log(document.getElementById('sidebar_load_file'));

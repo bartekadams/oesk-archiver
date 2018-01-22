@@ -1,21 +1,3 @@
-%div{ id: "graph_ratio_to_original_size", style: "width:800px;height:550px;margin:auto" }
-.container
-  -# @uploaded_files.each do |f|
-    .row
-      .col-xs-12.uploaded-file-row
-        = f.name
-        = f.size
-        = f.inspect
-        %ul
-          - f.compressed_files.each do |c|
-            %li
-              = c.name + c.compression_ratio.to_s
-= link_to "Załaduj plik", new_uploaded_file_path
-= link_to "Strona główna", welcome_index_path
-= javascript_include_tag "charts"
+Index lista plikow
 :javascript
-  console.log(#{raw @data.to_json});
-  draw_ratio_to_original_size(#{raw @data[:pdf].to_json});
-
   document.getElementById('sidebar_file_list').className += " active";
-  console.log(document.getElementById('sidebar_load_file'));

@@ -1,6 +1,10 @@
 class UploadedFilesController < ApplicationController
 
   def index
+
+  end
+
+  def ratio_to_size
     @data = {} # same as Hash.new
     @data[:pdf] = getData(UploadedFile.where(file_type: :pdf))
     @data[:doc] = getData(UploadedFile.where(file_type: :doc))
