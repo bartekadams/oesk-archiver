@@ -1,3 +1,42 @@
-Index lista plikow
+%h1.text-center.epic-title
+  Lista plików
+- @uploaded_files.each do |file|
+  .uploaded-file-row
+    Plik:
+    %span.uploaded-file-name
+      = file.name
+    %br
+    Utworzony:
+    = file.created_at
+    %br
+    Rozmiar:
+    = number_to_human_size(file.size)
+    %table.table.table-striped.compressed-files-table
+      %thead
+        %tr
+          %th
+            kompresja
+          %th
+            rozmiar
+          %th
+            czas
+          %th
+            typ
+          %th
+            plik
+      %tbody
+        - file.compressed_files.order(size: :desc).each do |comp_file|
+          %tr
+            %td
+              = (comp_file.compression_ratio * 100).round(2).to_s + "%"
+            %td
+              = number_to_human_size(comp_file.size)
+            %td
+              = comp_file.compression_time.round(0).to_s + " ms"
+            %td
+              = comp_file.file_type
+            %td
+              = link_to comp_file.name, comp_file.file.url
+
 :javascript
   document.getElementById('sidebar_file_list').className += " active";

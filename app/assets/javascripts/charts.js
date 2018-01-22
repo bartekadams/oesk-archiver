@@ -9,10 +9,13 @@ function draw_ratio_to_original_size(data, chart_html_id, title) {
 
   var layout = {
     title: title,
+    titlefont: {
+      size: 25
+    },
     yaxis: {
       title: 'Współczynnik kompresji',
       tickformat: ',.0%',
-      range: [0,1.2]
+      range: [0,1.05]
     },
     xaxis: {
       title: "Rozmiar pliku"

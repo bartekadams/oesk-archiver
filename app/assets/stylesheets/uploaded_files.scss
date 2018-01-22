@@ -4,7 +4,7 @@
 
 .uploaded-file {
   &-row {
-    background-color: rgb(30, 156, 62);
+    border: 1px solid black;
     border-radius: 15px;
     padding: 10px;
     margin: 5px 0px 0px 0px;
@@ -14,8 +14,19 @@
     padding: 10px;
     border-radius: 15px;
   }
+  &-name {
+    font-weight: bold;
+  }
 }
 
 .center-text {
   text-align: center;
+}
+
+.compressed-files-table {
+  font-size: 95%;
+}
+
+.epic-title {
+  margin-bottom: 20px;
 }

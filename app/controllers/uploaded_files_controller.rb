@@ -1,7 +1,7 @@
 class UploadedFilesController < ApplicationController
 
   def index
-
+    @uploaded_files = UploadedFile.all.reverse_order
   end
 
   def ratio_to_size
