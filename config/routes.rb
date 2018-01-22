@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'uploaded_files/clear_all_files'
   get 'uploaded_files/ratio_to_size'
   get 'uploaded_files/time_to_size'
+  get 'uploaded_files/ratio_to_type'
 
   resources :uploaded_files
 
