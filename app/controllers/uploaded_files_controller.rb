@@ -11,6 +11,13 @@ class UploadedFilesController < ApplicationController
     @data[:other] = getData(UploadedFile.where(file_type: :other))
   end
 
+  def time_to_size
+    @data = {}
+    @data[:pdf] = getData(UploadedFile.where(file_type: :pdf))
+    @data[:doc] = getData(UploadedFile.where(file_type: :doc))
+    @data[:other] = getData(UploadedFile.where(file_type: :other))
+  end
+
   def new
     @uploaded_file = UploadedFile.new
   end

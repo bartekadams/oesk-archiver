@@ -19,7 +19,9 @@
             %li#sidebar_load_file
               = link_to "Załaduj plik", new_uploaded_file_path
             %li#sidebar_ratio_to_size
-              = link_to "Ratio / size", uploaded_files_ratio_to_size_path
+              = link_to "Stopień kompresji / rozmiar", uploaded_files_ratio_to_size_path
+            %li#sidebar_time_to_size
+              = link_to "Czas kompresji / rozmiar", uploaded_files_time_to_size_path
         .col-xs-9.main-page-content
           - flash.each do |name, msg|
             - if msg.is_a?(String)
