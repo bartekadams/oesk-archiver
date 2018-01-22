@@ -20,8 +20,10 @@
               = link_to "Załaduj plik", new_uploaded_file_path
             %li#sidebar_ratio_to_size
               = link_to "Ratio / size", uploaded_files_ratio_to_size_path
-            %li
-              = link_to "Usuń wszystkie pliki", uploaded_files_clear_all_files_path, remote: true
-
         .col-xs-9.main-page-content
+          - flash.each do |name, msg|
+            - if msg.is_a?(String)
+              %div{:class => "alert alert-dismissible alert-#{name.to_s == 'notice' ? 'success' : 'danger'}"}
+                %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+                = content_tag :div, msg, :id => "flash_#{name}"
           = yield

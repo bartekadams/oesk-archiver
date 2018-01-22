@@ -17,15 +17,19 @@ class UploadedFilesController < ApplicationController
 
   def create
     file = UploadedFile.new
-    file.name = params[:uploaded_file][:file].original_filename.gsub(/\s+/, '_')
-    file.size = params[:uploaded_file][:file].size
-    file.file = params[:uploaded_file][:file]
-    file.file_type = params[:uploaded_file][:file_type].to_i
-    file.save
-
-    shell(file)
-
-    redirect_to uploaded_files_path
+    if params[:uploaded_file][:file]
+      file.name = params[:uploaded_file][:file].original_filename.gsub(/\s+/, '_')
+      file.size = params[:uploaded_file][:file].size
+      file.file = params[:uploaded_file][:file]
+      file.file_type = params[:uploaded_file][:file_type].to_i
+    end
+    if file.save
+      shell(file)
+      redirect_to uploaded_files_path
+    else
+      flash.alert = "Musisz załączyć plik o rozmiarze do 10MB :/"
+      redirect_to new_uploaded_file_path
+    end
   end
 
   def clear_all_files
