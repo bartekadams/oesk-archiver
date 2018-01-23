@@ -96,12 +96,12 @@ function get_time_to_original_size_trace(compression_name, compressed_files_data
 
 function draw_ratio_to_type(data, chart_html_id, title) {
   var y = [];
-  y.push(get_ratio_to_type_trace("tar_gz", data.tar_gz));
-  y.push(get_ratio_to_type_trace("tar_bz", data.tar_bz));
-  y.push(get_ratio_to_type_trace("lz4", data.lz4));
-  y.push(get_ratio_to_type_trace("xz", data.xz));
-  y.push(get_ratio_to_type_trace("7z", data._7z));
-  y.push(get_ratio_to_type_trace("kgb", data.kgb));
+  y.push(get_ratio_to_type_value("tar_gz", data.tar_gz));
+  y.push(get_ratio_to_type_value("tar_bz", data.tar_bz));
+  y.push(get_ratio_to_type_value("lz4", data.lz4));
+  y.push(get_ratio_to_type_value("xz", data.xz));
+  y.push(get_ratio_to_type_value("7z", data._7z));
+  y.push(get_ratio_to_type_value("kgb", data.kgb));
 
   var x = ['tar_gz', 'tar_bz', 'lz4', 'xz', '7z', 'kgb'];
 
@@ -125,8 +125,6 @@ function draw_ratio_to_type(data, chart_html_id, title) {
     y: y,
     mode: 'markers',
     type: 'bar',
-    //name: compression_name,
-    //text: names,
     textposition: 'top center',
     marker: { size: 12 }
   }];
@@ -134,11 +132,10 @@ function draw_ratio_to_type(data, chart_html_id, title) {
   Plotly.plot(chart_html_id, trace, layout);
 }
 
-function get_ratio_to_type_trace(compression_name, compressed_files_data) {
+function get_ratio_to_type_value(compression_name, compressed_files_data) {
   let ratio = 0.0;
   for(let compressed_file of compressed_files_data) {
     ratio += compressed_file.compression_ratio;
-    //names.push(compressed_file.name.toString());
   }
   return (ratio / compressed_files_data.length);
 }

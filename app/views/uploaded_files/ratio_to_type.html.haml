@@ -1,5 +1,5 @@
 %h1.text-center.epic-title
-  Czas kompresji do rozmiaru pliku
+  Stopień kompresji do typu formatu kompresji
 %div{ id: "chart_ratio_to_type_pdf", style: "width:100%;height:550px;margin:auto" }
 %div{ id: "chart_ratio_to_type_doc", style: "width:100%;height:550px;margin:auto" }
 %div{ id: "chart_ratio_to_type_other", style: "width:100%;height:550px;margin:auto" }
@@ -9,21 +9,3 @@
   draw_ratio_to_type(#{raw @data[:doc].to_json}, "chart_ratio_to_type_doc", "pliki DOC");
   draw_ratio_to_type(#{raw @data[:other].to_json}, "chart_ratio_to_type_other", "pozostałe pliki");
   document.getElementById('sidebar_ratio_to_type').className += " active";
-  //console.log(#{raw @data[:other].to_json});
-  //stopien kompresji do typu kompresji wzgledem pliku
-  //x typ
-  //y stopien
-  //wykres doc/pdf/inne
-  //https://plot.ly/javascript/axes/#categorical-axes
-  var x = ['7z', 'xz', 'tar_gz'];
-  var y = [12, 32, 5];
-  var trace = {
-    x: x,
-    y: y,
-    mode: 'markers',
-    type: 'bar',
-    textposition: 'top center',
-    marker: { size: 12 }
-  };
-
-  var data = [trace];
