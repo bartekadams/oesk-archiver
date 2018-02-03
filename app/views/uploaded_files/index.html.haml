@@ -36,7 +36,7 @@
             %td
               = comp_file.file_type
             %td
-              = link_to comp_file.name, comp_file.file.url
-
+              -#= link_to comp_file.name, comp_file.file.url
+              = comp_file.name
 :javascript
   document.getElementById('sidebar_file_list').className += " active";
