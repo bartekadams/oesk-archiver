@@ -1,5 +1,11 @@
 # OESK Archiver
 
+Project created on studies for OESK classes.
+
+pl: Ocena efektywności programów komputerowych
+
+eng. Computer programs efficiency evaluation
+
 Run to update database:
 ```sh
 $ rails db:migrate
